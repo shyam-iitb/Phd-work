@@ -1,0 +1,66 @@
+/*Macro for checking the Flux of particles through the start detector from lambda disks and start which is defines as the number of particles per unit area per second by shaym kumar*/
+
+
+#include "TGraphErrors.h"
+#include "TF1.h"
+#include "TRandom.h"
+#include "TCanvas.h"
+#include "TLegend.h"
+#include "TMath.h"
+#include "TClonesArray.h"
+#include <TGeoNode.h>
+#include "TGeoVolume.h"
+#include <string>
+//#include "/home/shyam/pandaroot/pnddata/PndMCTrack.h"
+//#include "/home/shyam/pandaroot/start/PndStartPoint.h"
+
+void startflux()
+{
+	Int_t m=0;
+	Int_t q=0;
+        Int_t p=0;
+       TVector3 in,out,point;
+       Double_t xin,yin,zin,xout,yout,zout;
+       TString volname;
+
+///////////////////////////////////////////////Reading the root file
+
+	TFile* f = new TFile("../sim_complete.root"); // the sim file you want to analyse
+	TTree *t=(TTree *) f->Get("cbmsim") ;
+        TFile* f1 = new TFile("../simparams.root");
+        f1->Get("FairGeoParSet"); // if it is not working use FairBaseParSet
+	TClonesArray* mc_array=new TClonesArray("PndMCTrack");
+	t->SetBranchAddress("MCTrack", &mc_array);
+	TClonesArray *start_array=new TClonesArray("PndStartPoint");
+	t->SetBranchAddress("STARTPoint",&start_array);//Branch names
+        
+        Int_t nEntries =  t->GetEntriesFast();
+	for (Int_t j=0; j< nEntries; j++)
+	{
+		std::vector<Int_t> a, b;	
+		t->GetEntry(j);
+         
+		//--------------------Start detector Entries--------------------
+		for (Int_t k=0; k<start_array->GetEntriesFast(); k++)
+		{
+			PndStartPoint* startpoint = (PndStartPoint*)start_array->At(k);
+                          xin=startpoint->GetX(); yin=startpoint->GetY(); zin=startpoint->GetZ();
+                          std::cout<<" In Position"<<xin<<" "<<yin<<" "<<zin<<std::endl;  
+                         point.SetXYZ(xin,yin,zin);
+                   TGeoNode* node = gGeoManager->FindNode(point.x(),point.y(),point.z());
+                             p++;
+                             node->cd();
+		        volname = node->GetVolume()->GetName();
+                          std::cout<<"volume name is"<<volname<<std::endl;
+                          std:: cout<<" Net volume for MC point"<<std::endl;
+			 if( "StripSensorActiveLargeTrap"== volname || "StripSensorActiveSmallTrap"== volname){
+			m++;
+			a.push_back(startpoint->GetTrackID());
+                      }
+		}
+	std::cout<<"The number of points"<<m<<std::endl;
+   } //Events
+ std::cout << "The number of Events "<<j<<std::endl;	
+}
+
+
