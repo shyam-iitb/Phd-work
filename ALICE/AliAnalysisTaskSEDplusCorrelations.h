@@ -150,8 +150,8 @@ class AliAnalysisTaskSEDplusCorrelations : public AliAnalysisTaskSE
     Float_t fBinWidth;//width of one bin in output histos
     Bool_t  fPoolByPool;
     Int_t  fWhichPool;
-	Bool_t fPoolbyCent;
-	Int_t fEvtMult;
+    Bool_t fPoolbyCent;
+    Int_t fEvtMult;
     Bool_t fCheckCutDist;
     Int_t fAODProtection; //New by Fabio
     TString fCutSuffix; //suffix for cut
