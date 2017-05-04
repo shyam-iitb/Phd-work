@@ -1,4 +1,4 @@
-int isto(void){
+int isto(){
 
  FILE *leggi=fopen("Lista6.txt","r");
 
