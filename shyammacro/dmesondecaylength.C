@@ -25,8 +25,8 @@ void dmesondecaylength()
   TStopwatch timer;
   timer.Start();
   // ------------------------------------------------------------------------
- double c= 3* std::pow(10.,8.);
- double mt= 1040*std::pow(10.,-15.); // mean decay time
+ double c= 3.0e+8;
+ double mt= 1040e-15; // mean decay time
  double mass= 1.869; // rest mass in GeV/c^2
 //TCanvas* can = new TCanvas("can","Radiation Length for start detector",0,0,100,100);
 TCanvas *c1 = new TCanvas("c1", "c1",0,52,1191,692);
@@ -61,5 +61,6 @@ h->SetTitle("D^{+} meson decay length = c#tau#sqrt{(#gamma_{D^{+}}^{2}-1)};Momen
   // ------------------------------------------------------------------------
 
 }
+
 
 
