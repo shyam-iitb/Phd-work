@@ -12,19 +12,24 @@ void separation_sigma1()
 	{
 //------------------Style format---------------------------------
 //gStyle->SetOptStat("nemruoi");
-   gStyle->SetOptTitle(1);
-   gStyle->SetTitleOffset(.85,"X");gStyle->SetTitleOffset(.85,"Y");
-   gStyle->SetTitleSize(.05,"X");gStyle->SetTitleSize(.05,"Y");
-   gStyle->SetLabelSize(.05,"X");gStyle->SetLabelSize(.05,"Y");
-   gStyle->SetHistLineWidth(2);
-   gStyle->SetOptFit(1);
+         gStyle->SetOptStat(0);
+   // gStyle->SetPalette(1);
+         gStyle->SetTitleSize(0.06,"");
+         gStyle->SetTitleSize(0.05,"X");
+         gStyle->SetLabelSize(0.05,"X");
+         gStyle->SetLabelSize(0.05,"Y");
+         gStyle->SetTitleSize(0.05,"Y");
+         gStyle->SetTitleOffset(0.88,"Y");
+         gStyle->SetOptTitle(0);
+         gStyle->SetOptStat(111111);
 
 // -----   Timer   --------------------------------------------------------
   TStopwatch timer;
   timer.Start();
   // ------------------------------------------------------------------------
-  TCanvas *c1 = new TCanvas("c1", "c1",0,52,1191,692);
-                 c1->SetGrid();
+  TCanvas *c1 = new TCanvas("c1", "c1",2000,1500);
+               //  c1->SetGrid();
+                c1->SetMargin(0.09, 0.02 ,0.1,0.06);
                 Double_t c= 3.0e+8; //speed of light 
 
 	       // All particle masses are in MeV/c^2
@@ -59,7 +64,7 @@ void separation_sigma1()
                   delT=L*(E1-E2)/(p*c);
                   delT*=1.0E9;
                   std::cout<<"Delta T"<<delT<<std::endl;
-                 // delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
+                 delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
                   x.push_back(p*0.001);
                   y.push_back(delT);
               
@@ -73,13 +78,14 @@ void separation_sigma1()
 	     }  
            gr = new TGraph(n,a,b);
            gr->SetLineColor(2);
-           gr->SetLineWidth(2);
+           gr->SetLineWidth(1);
            gr->SetMarkerColor(2);
            gr->SetMarkerStyle(6);
            gr->SetTitle("Time difference of the Particles hitting Ftof");
            gr->GetXaxis()->SetTitle("Momentum (GeV/c)");
            gr->GetXaxis()->CenterTitle(true);
-           gr->GetYaxis()->SetTitle("Time difference [ns]");
+         // gr->GetXaxis()->SetRangeUser(0.,10.0);
+           gr->GetYaxis()->SetTitle("Separation (#sigma)");
            gr->GetYaxis()->CenterTitle(true);
            gr->Draw("ACP"); 
            x.clear();
@@ -96,7 +102,7 @@ void separation_sigma1()
                   delT=L*(E1-E2)/(p*c);
                   delT*=1.0E9;
                   std::cout<<"Delta T"<<delT<<std::endl;
-                 // delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
+                  delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
                   x.push_back(p*0.001);
                   y.push_back(delT);
               
@@ -110,7 +116,7 @@ void separation_sigma1()
 	     }    
            gr1 = new TGraph(n,a,b);
            gr1->SetLineColor(3);
-           gr1->SetLineWidth(2);
+           gr1->SetLineWidth(1);
            gr1->SetMarkerColor(3);
            gr1->SetMarkerStyle(6);
            gr1->Draw("same"); 
@@ -128,7 +134,7 @@ void separation_sigma1()
                   delT=L*(E1-E2)/(p*c);
                   delT*=1.0E9;
                   std::cout<<"Delta T"<<delT<<std::endl;
-               //   delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
+                  delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
                   x.push_back(p*0.001);
                   y.push_back(delT);
               
@@ -142,7 +148,7 @@ void separation_sigma1()
 	     }    
            gr2 = new TGraph(n,a,b);
            gr2->SetLineColor(4);
-           gr2->SetLineWidth(2);
+           gr2->SetLineWidth(1);
            gr2->SetMarkerColor(4);
            gr2->SetMarkerStyle(6);
            gr2->Draw("same"); 
@@ -160,7 +166,7 @@ void separation_sigma1()
                   delT=L*(E1-E2)/(p*c);
                   delT*=1.0E9;
                   std::cout<<"Delta T"<<delT<<std::endl;
-                 // delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
+                  delT= delT/0.1; //separation 0.1 ns means 100 ps time resolution of detector
                   x.push_back(p*0.001);
                   y.push_back(delT);
               
@@ -174,7 +180,7 @@ void separation_sigma1()
 	     }    
            gr3 = new TGraph(n,a,b);
            gr3->SetLineColor(6);
-           gr3->SetLineWidth(2);
+           gr3->SetLineWidth(1);
            gr3->SetMarkerColor(6);
            gr3->SetMarkerStyle(6);
            gr3->Draw("same"); 
@@ -206,7 +212,7 @@ void separation_sigma1()
 	     }    
            gr4 = new TGraph(n,a,b);
            gr4->SetLineColor(6);
-           gr4->SetLineWidth(2);
+           gr4->SetLineWidth(1);
            gr4->SetMarkerColor(6);
            gr4->SetMarkerStyle(6);
            gr4->Draw("same"); 
@@ -214,8 +220,9 @@ void separation_sigma1()
            y.clear();*/
            
        //--------------Legend Draw----------------------
-          leg_hist = new TLegend(0.5,0.6,0.75,0.75);
+          leg_hist = new TLegend(0.5,0.55,0.75,0.94);
            leg_hist->SetHeader("Particles");
+           leg_hist->SetTextSize(0.05);
            leg_hist->AddEntry(gr,"#pi/K","l"); 
            leg_hist->AddEntry(gr1,"#pi/Proton","l");
            leg_hist->AddEntry(gr2,"K/Proton","l");
