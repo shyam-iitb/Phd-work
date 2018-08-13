@@ -38,6 +38,7 @@
    det.Draw("EPxy",99).Draw("COLZ");
    // calcualte induced current
    TCanvas c3; c3.cd();
+   det->SetDriftHisto(3e-9,100);
    det.MipIR(10000);
    det->sum.Draw();
    det->neg.Draw("SAME");
